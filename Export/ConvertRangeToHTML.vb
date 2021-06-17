@@ -3,12 +3,17 @@ Sub ConvertRangeToHTML( _
 		ByVal rng As Range, _
 		Optional VisibleOnly As Boolean = False)
 	
+	' Delete existing htm file
+	On Error Resume Next
+		Kill(path)
+	On Error Goto 0
+	
 	' Remove hidden cell
 	If VisibleOnly Then
-		rng.SpecialCells(xlTypeVisible).Copy
+		rng.SpecialCells(xlCellTypeVisible).Copy
 		
 		Dim wkb As Workbook
-		Set wkb = Workbook.Add
+		Set wkb = Workbooks.Add
 		
 		With wkb.Sheets(1).Cells(1)
 			.PasteSpecial Paste:=8
